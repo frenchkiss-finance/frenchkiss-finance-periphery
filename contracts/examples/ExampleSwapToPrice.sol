@@ -1,21 +1,21 @@
 pragma solidity =0.6.6;
 
-import '@frenchkiss-libs/frenchkiss-finance-core/contracts/interfaces/IFrenchkissPair.sol';
+import '@frenchkiss-libs/frenchkiss-finance-core/contracts/interfaces/IFrenchKissPair.sol';
 import '@uniswap/lib/contracts/libraries/Babylonian.sol';
 import '@uniswap/lib/contracts/libraries/TransferHelper.sol';
 
 import '../interfaces/IERC20.sol';
-import '../interfaces/IFrenchkissRouter01.sol';
+import '../interfaces/IFrenchKissRouter01.sol';
 import '../libraries/SafeMath.sol';
-import '../libraries/FrenchkissLibrary.sol';
+import '../libraries/FrenchKissLibrary.sol';
 
 contract ExampleSwapToPrice {
     using SafeMath for uint256;
 
-    IFrenchkissRouter01 public immutable router;
+    IFrenchKissRouter01 public immutable router;
     address public immutable factory;
 
-    constructor(address factory_, IFrenchkissRouter01 router_) public {
+    constructor(address factory_, IFrenchKissRouter01 router_) public {
         factory = factory_;
         router = router_;
     }
@@ -62,7 +62,7 @@ contract ExampleSwapToPrice {
         bool aToB;
         uint256 amountIn;
         {
-            (uint256 reserveA, uint256 reserveB) = FrenchkissLibrary.getReserves(factory, tokenA, tokenB);
+            (uint256 reserveA, uint256 reserveB) = FrenchKissLibrary.getReserves(factory, tokenA, tokenB);
             (aToB, amountIn) = computeProfitMaximizingTrade(
                 truePriceTokenA, truePriceTokenB,
                 reserveA, reserveB

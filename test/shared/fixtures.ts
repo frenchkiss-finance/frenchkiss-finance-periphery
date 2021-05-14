@@ -4,16 +4,16 @@ import { deployContract } from 'ethereum-waffle'
 
 import { expandTo18Decimals } from './utilities'
 
-import FrenchkissFactory from '@frenchkiss-libs/frenchkiss-finance-core/build/FrenchkissFactory.json'
-import IFrenchkissPair from '@frenchkiss-libs/frenchkiss-finance-core/build/IFrenchkissPair.json'
+import FrenchKissFactory from '@frenchkiss-libs/frenchkiss-finance-core/build/FrenchKissFactory.json'
+import IFrenchKissPair from '@frenchkiss-libs/frenchkiss-finance-core/build/IFrenchKissPair.json'
 
 import ERC20 from '../../build/ERC20.json'
 import WETH9 from '../../build/WETH9.json'
 import UniswapV1Exchange from '../../buildV1/UniswapV1Exchange.json'
 import UniswapV1Factory from '../../buildV1/UniswapV1Factory.json'
-import FrenchkissRouter01 from '../../build/FrenchkissRouter01.json'
-import FrenchkissMigrator from '../../build/FrenchkissMigrator.json'
-import FrenchkissRouter02 from '../../build/FrenchkissRouter.json'
+import FrenchKissRouter01 from '../../build/FrenchKissRouter01.json'
+import FrenchKissMigrator from '../../build/FrenchKissMigrator.json'
+import FrenchKissRouter02 from '../../build/FrenchKissRouter.json'
 import RouterEventEmitter from '../../build/RouterEventEmitter.json'
 
 const overrides = {
@@ -49,17 +49,17 @@ export async function v2Fixture(provider: Web3Provider, [wallet]: Wallet[]): Pro
   await factoryV1.initializeFactory((await deployContract(wallet, UniswapV1Exchange, [])).address)
 
   // deploy V2
-  const factoryV2 = await deployContract(wallet, FrenchkissFactory, [wallet.address])
+  const factoryV2 = await deployContract(wallet, FrenchKissFactory, [wallet.address])
 
   // deploy routers
-  const router01 = await deployContract(wallet, FrenchkissRouter01, [factoryV2.address, WETH.address], overrides)
-  const router02 = await deployContract(wallet, FrenchkissRouter02, [factoryV2.address, WETH.address], overrides)
+  const router01 = await deployContract(wallet, FrenchKissRouter01, [factoryV2.address, WETH.address], overrides)
+  const router02 = await deployContract(wallet, FrenchKissRouter02, [factoryV2.address, WETH.address], overrides)
 
   // event emitter for testing
   const routerEventEmitter = await deployContract(wallet, RouterEventEmitter, [])
 
   // deploy migrator
-  const migrator = await deployContract(wallet, FrenchkissMigrator, [factoryV1.address, router01.address], overrides)
+  const migrator = await deployContract(wallet, FrenchKissMigrator, [factoryV1.address, router01.address], overrides)
 
   // initialize V1
   await factoryV1.createExchange(WETHPartner.address, overrides)
@@ -71,7 +71,7 @@ export async function v2Fixture(provider: Web3Provider, [wallet]: Wallet[]): Pro
   // initialize V2
   await factoryV2.createPair(tokenA.address, tokenB.address)
   const pairAddress = await factoryV2.getPair(tokenA.address, tokenB.address)
-  const pair = new Contract(pairAddress, JSON.stringify(IFrenchkissPair.abi), provider).connect(wallet)
+  const pair = new Contract(pairAddress, JSON.stringify(IFrenchKissPair.abi), provider).connect(wallet)
 
   const token0Address = await pair.token0()
   const token0 = tokenA.address === token0Address ? tokenA : tokenB
@@ -79,7 +79,7 @@ export async function v2Fixture(provider: Web3Provider, [wallet]: Wallet[]): Pro
 
   await factoryV2.createPair(WETH.address, WETHPartner.address)
   const WETHPairAddress = await factoryV2.getPair(WETH.address, WETHPartner.address)
-  const WETHPair = new Contract(WETHPairAddress, JSON.stringify(IFrenchkissPair.abi), provider).connect(wallet)
+  const WETHPair = new Contract(WETHPairAddress, JSON.stringify(IFrenchKissPair.abi), provider).connect(wallet)
 
   return {
     token0,

@@ -1,8 +1,8 @@
 pragma solidity >=0.6.2;
 
-import './IFrenchkissRouter01.sol';
+import './IFrenchKissRouter01.sol';
 
-interface IFrenchkissRouter02 is IFrenchkissRouter01 {
+interface IFrenchKissRouter02 is IFrenchKissRouter01 {
     function removeLiquidityETHSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
