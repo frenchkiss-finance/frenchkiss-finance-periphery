@@ -21,7 +21,7 @@ library FrenchKissLibrary {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'35ad034822df7d59c3acc96986764b713fddf03c83c5c027d8c3cbd0e44e9c8e' // init code hash
+                hex'8eab55e5506311556bdb30936bb6fee7bae6f9290dce621d84c2854209f30fa3' // init code hash
             ))));
     }
 

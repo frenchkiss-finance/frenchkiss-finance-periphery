@@ -1,6 +1,5 @@
 # FrenchKiss Router
 
-### Bsc-Test
 
 The following assumes the use of `node@>=10`.
 

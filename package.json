@@ -1,6 +1,6 @@
 {
   "name": "frenchkissfinance-peripheral",
-  "version": "1.1.0-beta.0",
+  "version": "0.1.0",
   "description": "🎚 Peripheral smart contracts for interacting with frenchkiss",
   "engines": {
     "node": ">=10"
